@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://giantslayer1980.github.io/Tennis-Booking/</loc>
+    
+    <lastmod>2023-05-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://giantslayer1980.github.io/Swift/</loc>
     
     <lastmod>2023-05-20</lastmod>
@@ -46,6 +55,13 @@
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/iOS/SwiftUI/</loc>
+    <lastmod>2023-05-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://giantslayer1980.github.io/categories/WeChat-Mini-Program/</loc>
     <lastmod>2023-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
