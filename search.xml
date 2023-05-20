@@ -23,6 +23,25 @@
     
     
     <entry>
+      <title>3PTS</title>
+      <link href="/3PTS/"/>
+      <url>/3PTS/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/Images/3PTS.jpg" alt="3PTS"></p><p>3PTS 是一款用于记录篮球三分球练习成绩的小程序。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> WeChat Mini Program </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Swift</title>
       <link href="/Swift/"/>
       <url>/Swift/</url>

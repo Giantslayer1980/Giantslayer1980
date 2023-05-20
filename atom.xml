@@ -38,6 +38,27 @@
   </entry>
   
   <entry>
+    <title>3PTS</title>
+    <link href="http://giantslayer1980.github.io/3PTS/"/>
+    <id>http://giantslayer1980.github.io/3PTS/</id>
+    <published>2023-05-19T16:00:00.000Z</published>
+    <updated>2023-05-20T13:24:16.059Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/Images/3PTS.jpg" alt="3PTS"></p><p>3PTS 是一款用于记录篮球三分球练习成绩的小程序。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/Images/3PTS.jpg&quot; alt=&quot;3PTS&quot;&gt;&lt;/p&gt;
+&lt;p&gt;3PTS 是一款用于记录篮球三分球练习成绩的小程序。&lt;/p&gt;
+</summary>
+    
+    
+    
+    <category term="WeChat Mini Program" scheme="http://giantslayer1980.github.io/categories/WeChat-Mini-Program/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Swift</title>
     <link href="http://giantslayer1980.github.io/Swift/"/>
     <id>http://giantslayer1980.github.io/Swift/</id>
