@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://giantslayer1980.github.io/Tennis-Singles/</loc>
+    <loc>http://giantslayer1980.github.io/2023-5-21/</loc>
     
     <lastmod>2023-05-23</lastmod>
     
@@ -13,7 +13,7 @@
   <url>
     <loc>http://giantslayer1980.github.io/3PTS/</loc>
     
-    <lastmod>2023-05-20</lastmod>
+    <lastmod>2023-05-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -22,7 +22,16 @@
   <url>
     <loc>http://giantslayer1980.github.io/Tennis-Booking/</loc>
     
-    <lastmod>2023-05-20</lastmod>
+    <lastmod>2023-05-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://giantslayer1980.github.io/Tennis-Singles/</loc>
+    
+    <lastmod>2023-05-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -80,6 +89,13 @@
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/WeChat-Mini-Program/</loc>
+    <lastmod>2023-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://giantslayer1980.github.io/categories/Paintings/</loc>
     <lastmod>2023-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
