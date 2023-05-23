@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Tennis Singles</title>
+      <link href="/Tennis-Singles/"/>
+      <url>/Tennis-Singles/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/Images/Tennis%20Singles.jpg" alt="Tennis Singles"></p><p>“Tennis Singles” 是一款用于发布、记录、查询和统计网球单打比赛的小程序。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> WeChat Mini Program </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Tennis Booking</title>
       <link href="/Tennis-Booking/"/>
       <url>/Tennis-Booking/</url>

@@ -6,15 +6,36 @@
   <link href="http://giantslayer1980.github.io/atom.xml" rel="self"/>
   
   <link href="http://giantslayer1980.github.io/"/>
-  <updated>2023-05-20T13:14:25.973Z</updated>
+  <updated>2023-05-23T12:28:53.838Z</updated>
   <id>http://giantslayer1980.github.io/</id>
   
   <author>
-    <name>Giantslayer1980</name>
+    <name>Dacle</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tennis Singles</title>
+    <link href="http://giantslayer1980.github.io/Tennis-Singles/"/>
+    <id>http://giantslayer1980.github.io/Tennis-Singles/</id>
+    <published>2023-05-22T16:00:00.000Z</published>
+    <updated>2023-05-23T12:28:53.838Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/Images/Tennis%20Singles.jpg" alt="Tennis Singles"></p><p>“Tennis Singles” 是一款用于发布、记录、查询和统计网球单打比赛的小程序。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/Images/Tennis%20Singles.jpg&quot; alt=&quot;Tennis Singles&quot;&gt;&lt;/p&gt;
+&lt;p&gt;“Tennis Singles” 是一款用于发布、记录、查询和统计网球单打比赛的小程序。&lt;/p&gt;
+</summary>
+    
+    
+    
+    <category term="WeChat Mini Program" scheme="http://giantslayer1980.github.io/categories/WeChat-Mini-Program/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Tennis Booking</title>
