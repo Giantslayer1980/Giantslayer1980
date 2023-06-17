@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://giantslayer1980.github.io/2023-6-17/</loc>
+    
+    <lastmod>2023-06-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://giantslayer1980.github.io/2023-6-3/</loc>
     
     <lastmod>2023-06-03</lastmod>
@@ -67,7 +76,7 @@
 
   <url>
     <loc>http://giantslayer1980.github.io/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -77,35 +86,35 @@
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/iOS/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/iOS/Swift/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/iOS/SwiftUI/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/WeChat-Mini-Program/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://giantslayer1980.github.io/categories/Paintings/</loc>
-    <lastmod>2023-06-03</lastmod>
+    <lastmod>2023-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
