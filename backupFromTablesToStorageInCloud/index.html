@@ -4,13 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Stand-Down Comedian</title>
+  <title>定期自动将云端数据库备份至云存储中 | Stand-Down Comedian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stand-Down Comedian">
-<meta property="og:url" content="http://giantslayer1980.github.io/index.html">
+  <meta name="description" content="微信小程序使用的是云开发,之前都是通过手工保存云端数据库中多个表单的方式,以此进行数据备份。显然不够智能,也比较浪费时间。所以,此次写了个云函数,命名为autoBackupDatabase,设置好触发器后,即可自动将云数据库保存至云存储中。 从云数据库备份至云存储的主要步骤:  取得access_token; 取得数据库表单查询后的job_id; 通过取得的job_id获取到对应的数据库备份文件的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定期自动将云端数据库备份至云存储中">
+<meta property="og:url" content="http://giantslayer1980.github.io/backupFromTablesToStorageInCloud/index.html">
 <meta property="og:site_name" content="Stand-Down Comedian">
+<meta property="og:description" content="微信小程序使用的是云开发,之前都是通过手工保存云端数据库中多个表单的方式,以此进行数据备份。显然不够智能,也比较浪费时间。所以,此次写了个云函数,命名为autoBackupDatabase,设置好触发器后,即可自动将云数据库保存至云存储中。 从云数据库备份至云存储的主要步骤:  取得access_token; 取得数据库表单查询后的job_id; 通过取得的job_id获取到对应的数据库备份文件的">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-17T16:53:36.442Z">
 <meta property="article:author" content="Dacle">
 <meta name="twitter:card" content="summary">
   
@@ -69,57 +73,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-2023-6-17" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023-6-17/" class="article-date">
-  <time class="dt-published" datetime="2023-06-16T16:00:00.000Z" itemprop="datePublished">2023-06-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Paintings/">Paintings</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023-6-17/">2023-6-17 -- mum and cat</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/2023-6-17.jpg" alt="2023-6-17"></p>
-
-        
-          <p class="article-more-link">
-            <a href="/2023-6-17/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/2023-6-17/" data-id="clizob67l0000voea9c15ennz" data-title="2023-6-17 -- mum and cat" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-backupFromTablesToStorageInCloud" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-backupFromTablesToStorageInCloud" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/backupFromTablesToStorageInCloud/" class="article-date">
   <time class="dt-published" datetime="2023-06-16T16:00:00.000Z" itemprop="datePublished">2023-06-17</time>
@@ -136,8 +90,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/backupFromTablesToStorageInCloud/">定期自动将云端数据库备份至云存储中</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      定期自动将云端数据库备份至云存储中
     </h1>
   
 
@@ -158,11 +112,6 @@
 <p>以下为<code>autoBackupDatabase</code>云函数的全部代码:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 云函数入口文件</span></span><br><span class="line">const cloud <span class="operator">=</span> require(&#x27;wx<span class="operator">-</span>server<span class="operator">-</span>sdk&#x27;);</span><br><span class="line">const request <span class="operator">=</span> require(&#x27;request&#x27;);</span><br><span class="line">cloud.<span class="keyword">init</span>(&#123; env: &#x27;xxxxxx&#x27; &#125;); <span class="comment">// 使用当前云环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.</span></span><br><span class="line"><span class="comment">// 获得access_token</span></span><br><span class="line"><span class="keyword">async</span> function getAccessToken(appid, secret) &#123;</span><br><span class="line">    <span class="keyword">return</span> new <span class="type">Promise</span>((resolve, reject) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">        request.get(</span><br><span class="line">            `https:<span class="comment">//api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=$&#123;appid&#125;&amp;secret=$&#123;secret&#125;`,</span></span><br><span class="line">            (err, res, body) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    reject(err)</span><br><span class="line">                &#125;</span><br><span class="line">                resolve(<span class="type">JSON</span>.parse(body))</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.</span></span><br><span class="line"><span class="comment">// 进行数据库的查询操作,并导出一个job_id以获取文件地址</span></span><br><span class="line"><span class="keyword">async</span> function createExportJob(access_token, env, collection) &#123;</span><br><span class="line">    const date <span class="operator">=</span> new <span class="type">Date</span>().toISOString();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> new <span class="type">Promise</span>((resolve, reject) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">        request.post(</span><br><span class="line">            `https:<span class="comment">//api.weixin.qq.com/tcb/databasemigrateexport?access_token=$&#123;access_token&#125;`,</span></span><br><span class="line">            &#123;</span><br><span class="line">                body: <span class="type">JSON</span>.stringify(&#123;</span><br><span class="line">                    env, <span class="comment">// 云开发的环境ID</span></span><br><span class="line">                    file_path: `$&#123;date&#125;.json`, <span class="comment">// 准备生成的文件名称</span></span><br><span class="line">                    file_type: &#x27;<span class="number">1</span>&#x27;, <span class="comment">// &#x27;1&#x27; 为 JSON, &#x27;2&#x27; 为 CSV</span></span><br><span class="line">                    query: `db.collection(<span class="string">&quot;$&#123;collection&#125;&quot;</span>).get()` <span class="comment">// 预设的查询命令</span></span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;,</span><br><span class="line">            (err, res, body) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    reject(err)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                resolve(<span class="type">JSON</span>.parse(body))</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.</span></span><br><span class="line"><span class="comment">// 从 access_token 和 job_id 获取到 目标文件的url,</span></span><br><span class="line"><span class="comment">// 防止无法取到值,设置了一个500ms的setInterval去不断执行。</span></span><br><span class="line"><span class="keyword">async</span> function waitJobFinished(access_token, env, job_id) &#123;</span><br><span class="line">    <span class="keyword">return</span> new <span class="type">Promise</span>((resolve, reject) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">        const timer <span class="operator">=</span> setInterval(() <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            request.post(</span><br><span class="line">                `https:<span class="comment">//api.weixin.qq.com/tcb/databasemigratequeryinfo?access_token=$&#123;access_token&#125;`,</span></span><br><span class="line">                &#123;</span><br><span class="line">                    body: <span class="type">JSON</span>.stringify(&#123;</span><br><span class="line">                        env,</span><br><span class="line">                        job_id</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;,</span><br><span class="line">                (err, res, body) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                        reject(err)</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    const &#123; status, file_url &#125; <span class="operator">=</span> <span class="type">JSON</span>.parse(body)</span><br><span class="line"></span><br><span class="line">                    console.log(<span class="string">&quot;查询&quot;</span>)</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (status <span class="operator">===</span> &#x27;success&#x27;) &#123;</span><br><span class="line">                        clearInterval(timer)</span><br><span class="line">                        resolve(file_url)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br><span class="line">        &#125;, <span class="number">500</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.</span></span><br><span class="line"><span class="comment">// 从目标文件的url取得具体内容</span></span><br><span class="line"><span class="keyword">async</span> function getJsonContent(file_url) &#123;</span><br><span class="line">    <span class="keyword">return</span> new <span class="type">Promise</span>((resolve, reject) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">        request.get(</span><br><span class="line">            `$&#123;file_url&#125;`,</span><br><span class="line">            (err, res, body) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    reject(err)</span><br><span class="line">                &#125;</span><br><span class="line">                resolve(body)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 云函数入口函数</span></span><br><span class="line">exports.main <span class="operator">=</span> <span class="keyword">async</span> (event, context) <span class="operator">=&gt;</span> &#123;</span><br><span class="line">    const appid <span class="operator">=</span> <span class="string">&quot;xxxxxxx&quot;</span>;</span><br><span class="line">    const secret <span class="operator">=</span> <span class="string">&quot;xxxxxxx&quot;</span>;</span><br><span class="line">    const envId <span class="operator">=</span> <span class="string">&quot;xxxxxxx&quot;</span> <span class="comment">// 云开发的环境ID</span></span><br><span class="line">    <span class="comment">// 需要备份的集合名称</span></span><br><span class="line">    const backupFromTables <span class="operator">=</span> [<span class="string">&quot;table1&quot;</span>, <span class="string">&quot;table2&quot;</span>, <span class="string">&quot;table3&quot;</span>];</span><br><span class="line">    <span class="comment">// 云端备份所存放的目录</span></span><br><span class="line">    const folderName <span class="operator">=</span> <span class="string">&quot;databaseBackup&quot;</span></span><br><span class="line">    const dateString <span class="operator">=</span> (new <span class="type">Date</span>()).toISOString()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// count是为统计backupFromTables中已完成备份多少张表单的计数器</span></span><br><span class="line">    <span class="keyword">var</span> count <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> access_token <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. </span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        const result <span class="operator">=</span> <span class="keyword">await</span> getAccessToken(appid, secret)</span><br><span class="line">        access_token <span class="operator">=</span> result.access_token</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (typeof access_token <span class="operator">==</span> null <span class="operator">||</span> access_token<span class="operator">==</span> <span class="string">&quot;&quot;</span> <span class="operator">||</span> access_token <span class="operator">==</span> <span class="string">&quot;undefined&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new <span class="type">Error</span>(`获取 access_token 失败: $&#123;result.errmsg&#125;` <span class="operator">||</span> &#x27;获取 access_token 为空&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new <span class="type">Error</span>(`获取 access_token: $&#123;e.message&#125;`);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(index <span class="keyword">in</span> backupFromTables) &#123;</span><br><span class="line">        const backupFromTable <span class="operator">=</span> backupFromTables[index]</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2.</span></span><br><span class="line">        createExportJob(access_token, envId, backupFromTable)</span><br><span class="line">        .then(res <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            console.log(res)</span><br><span class="line">            <span class="keyword">if</span>(res.errcode <span class="operator">!==</span> <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> new <span class="type">Error</span>(<span class="string">&quot;Can&#x27;t get job_id&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            console.log(res.job_id)</span><br><span class="line">            <span class="comment">// 3.</span></span><br><span class="line">            <span class="keyword">return</span> waitJobFinished(access_token, envId, res.job_id)</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(file_url <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 4.</span></span><br><span class="line">            <span class="keyword">return</span> getJsonContent(file_url)</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(fileContent <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 5.</span></span><br><span class="line">            <span class="keyword">return</span> cloud.uploadFile(&#123;</span><br><span class="line">                cloudPath: &#x27;<span class="operator">./</span>&#x27; <span class="operator">+</span> folderName <span class="operator">+</span> &#x27;<span class="operator">/</span>&#x27; <span class="operator">+</span> dateString.slice(<span class="number">0</span>,<span class="number">10</span>) <span class="operator">+</span> &#x27;<span class="operator">/</span>&#x27; <span class="operator">+</span> dateString <span class="operator">+</span> &#x27;<span class="keyword">_</span>&#x27; <span class="operator">+</span> backupFromTable <span class="operator">+</span> &#x27;.json&#x27;,</span><br><span class="line">                fileContent: fileContent</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(res <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            count<span class="operator">++</span></span><br><span class="line">            console.log(<span class="string">&quot;---&gt;---- &quot;</span> <span class="operator">+</span> count <span class="operator">+</span> <span class="string">&quot;/&quot;</span> <span class="operator">+</span> backupFromTables.length<span class="operator">+</span> <span class="string">&quot;:&quot;</span> <span class="operator">+</span> backupFromTable <span class="operator">+</span> <span class="string">&quot;已完成备份 ---&lt;----&quot;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch( error <span class="operator">=&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> new <span class="type">Error</span>(`导出数据库异常: $&#123;error.message&#125;`);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
-          <p class="article-more-link">
-            <a href="/backupFromTablesToStorageInCloud/#more">Read More</a>
-          </p>
-        
       
     </div>
     <footer class="article-footer">
@@ -173,379 +122,28 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-2023-6-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023-6-3/" class="article-date">
-  <time class="dt-published" datetime="2023-06-02T16:00:00.000Z" itemprop="datePublished">2023-06-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Paintings/">Paintings</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2023-6-17/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
+          2023-6-17 -- mum and cat
+        
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023-6-3/">2023-6-3</a>
-    </h1>
   
+    <a href="/2023-6-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2023-6-3</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/2023-6-3.png" alt="2023-6-3"></p>
-
-        
-          <p class="article-more-link">
-            <a href="/2023-6-3/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/2023-6-3/" data-id="clifpvmf100002mu914ddhqtj" data-title="2023-6-3" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-Tennis-Singles" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/Tennis-Singles/" class="article-date">
-  <time class="dt-published" datetime="2023-05-22T16:00:00.000Z" itemprop="datePublished">2023-05-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/WeChat-Mini-Program/">WeChat Mini Program</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/Tennis-Singles/">Tennis Singles</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/Tennis%20Singles.jpg" alt="Tennis Singles"></p>
-<p>“Tennis Singles” 是一款用于发布、记录、查询和统计网球单打比赛的小程序。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/Tennis-Singles/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/Tennis-Singles/" data-id="cli0995s600007vu98xzhfzh6" data-title="Tennis Singles" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-2023-5-21" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023-5-21/" class="article-date">
-  <time class="dt-published" datetime="2023-05-20T16:00:00.000Z" itemprop="datePublished">2023-05-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Paintings/">Paintings</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023-5-21/">2023-5-21</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/2023-5-21.jpg" alt="2023-5-21"></p>
-
-        
-          <p class="article-more-link">
-            <a href="/2023-5-21/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/2023-5-21/" data-id="cli0b2ywo0000vqu90vru6dvv" data-title="2023-5-21" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Tennis-Booking" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/Tennis-Booking/" class="article-date">
-  <time class="dt-published" datetime="2023-05-19T16:00:00.000Z" itemprop="datePublished">2023-05-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/WeChat-Mini-Program/">WeChat Mini Program</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/Tennis-Booking/">Tennis Booking</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/TennisBooking.jpg" alt="Tennis Booking"></p>
-<p>“Tennis Booking” 是一款基于云开发的网球场管理工具。它具有网球场地发布、会员管理、场地预订等基本模块。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/Tennis-Booking/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/Tennis-Booking/" data-id="clhw0ive50000t0ea88y4bgho" data-title="Tennis Booking" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-3PTS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/3PTS/" class="article-date">
-  <time class="dt-published" datetime="2023-05-19T16:00:00.000Z" itemprop="datePublished">2023-05-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/WeChat-Mini-Program/">WeChat Mini Program</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/3PTS/">3PTS</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/Images/3PTS.jpg" alt="3PTS"></p>
-<p>“3PTS” 是一款用于记录篮球三分球练习成绩的小程序。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/3PTS/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/3PTS/" data-id="clhw0uxss0000hgea9w5qgrxe" data-title="3PTS" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Swift" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/Swift/" class="article-date">
-  <time class="dt-published" datetime="2023-01-02T16:00:00.000Z" itemprop="datePublished">2023-01-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iOS/">iOS</a>►<a class="article-category-link" href="/categories/iOS/Swift/">Swift</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/Swift/">Swift</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语:"></a>相关术语:</h1><ul>
-<li><strong>UIKit</strong> is the iOS user interface toolkit.</li>
-<li><strong>IB</strong> is Interface Builder.</li>
-<li><strong>CA</strong> is Core Animation. Like CALayer is a Core Animation data type responsible for managing the way your view looks. Core Animation handles animation.</li>
-<li><strong>CG</strong> is Apple’s Core Graphics framework. Like CGColor. Core Graphics handles drawing.</li>
-<li><strong>KVO</strong> is key-value observing.</li>
-<li><strong>NS</strong> is Next Step. Steve Jobs did lots.</li>
-<li><strong>VFL</strong> is a technique called Auto Layout Visual Format Language.</li>
-<li><strong>GCD</strong> is Grand Central Dispatch.</li>
-<li><strong>FIFO</strong> is First In, First Out.</li>
-<li><strong>MK</strong> is Mapkit.</li>
-<li><strong>NS</strong> came from the NeXTSTEP libraries Foundation and AppKit(those names are still used by Apple’s Cocoa frameworks). </li>
-<li><strong>UN</strong> is UserNotification.</li>
-<li><strong>CL</strong> is CoreLocation.</li>
-<li><strong>MC</strong> is Multipeer Connectivity.</li>
-<li><strong>CM</strong> is Core Motion.</li>
-<li><strong>LA</strong> is the Local Authentication framework.</li>
-<li><strong>HSB</strong> is Hue, Saturation and Brightness. Using this method of creating colors you specify values between 0 and 1 to control how saturated a color is (from 0 &#x3D; gray to 1 &#x3D; pure color) and brightness (from 0 &#x3D; black to 1 &#x3D; maximum brightness), and 0 to 1 for hue. “Hue” is a value from 0 to 1 also, but it represents a position on a color wheel, like using a color picker on your Mac. Hues 0 and 1 both represent red, with all other colors lying in between.</li>
-</ul>
-<h1 id="FileManager"><a href="#FileManager" class="headerlink" title="FileManager"></a>FileManager</h1><h2 id="枚举程序设备目录内的所有文件"><a href="#枚举程序设备目录内的所有文件" class="headerlink" title="枚举程序设备目录内的所有文件"></a>枚举程序设备目录内的所有文件</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fm <span class="operator">=</span> <span class="type">FileManager</span>.default</span><br><span class="line"><span class="keyword">let</span> path <span class="operator">=</span> <span class="type">Bundle</span>.main.resourcePath<span class="operator">!</span></span><br><span class="line"><span class="keyword">let</span> items <span class="operator">=</span> <span class="keyword">try!</span> fm.contentsOfDirectory(atPath: path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> items &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h1><h2 id="Bundle-main-url-forResource-–-仅通过文件名而返回该文件的url"><a href="#Bundle-main-url-forResource-–-仅通过文件名而返回该文件的url" class="headerlink" title="Bundle.main.url(forResource:) – 仅通过文件名而返回该文件的url"></a>Bundle.main.url(forResource:) – 仅通过文件名而返回该文件的url</h2><p>Finding a path to a file is something you’ll do a lot, because even though you know the file is called “start.txt” you don’t know where it might be on the filesystem. So, we use a built-in method of Bundle to find it: path(forResource:). This takes as its parameters the name of the file and its path extension, and returns a String? – i.e., you either get the path back or you get nil if it didn’t exist.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设要找寻到start.txt这个文件</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> startWordsURL <span class="operator">=</span> <span class="type">Bundle</span>.main.url(forResource: <span class="string">&quot;start&quot;</span>, withExtension: <span class="string">&quot;txt&quot;</span>) &#123;</span><br><span class="line">    <span class="comment">// 若找到该start.txt的url后读取里面的文本内容</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> startWords <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">String</span>(contentsOf: startWordsURL) &#123;</span><br><span class="line">        <span class="comment">// 省略后续代码</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Bundle-main-urls-forResourcesWithExtension-String-subdirectory-String-–-从直接指定文件名及具体目录名称来找所有文件"><a href="#Bundle-main-urls-forResourcesWithExtension-String-subdirectory-String-–-从直接指定文件名及具体目录名称来找所有文件" class="headerlink" title="Bundle.main.urls(forResourcesWithExtension: String?, subdirectory: String?) – 从直接指定文件名及具体目录名称来找所有文件"></a>Bundle.main.urls(forResourcesWithExtension: String?, subdirectory: String?) – 从直接指定文件名及具体目录名称来找所有文件</h2>
-        
-          <p class="article-more-link">
-            <a href="/Swift/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/Swift/" data-id="clemy7q9o0000d60dafayg6ph" data-title="Swift" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-SwiftUI" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/SwiftUI/" class="article-date">
-  <time class="dt-published" datetime="2022-12-31T16:00:00.000Z" itemprop="datePublished">2023-01-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iOS/">iOS</a>►<a class="article-category-link" href="/categories/iOS/SwiftUI/">SwiftUI</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/SwiftUI/">SwiftUI</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h3 id="components-seperatedBy"><a href="#components-seperatedBy" class="headerlink" title="components(seperatedBy:)"></a>components(seperatedBy:)</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input <span class="operator">=</span> <span class="string">&quot;a b c&quot;</span></span><br><span class="line"><span class="keyword">let</span> letters <span class="operator">=</span> input.components(separatedBy: <span class="string">&quot; &quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(letters)</span><br><span class="line"><span class="comment">// [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="trimmingCharacters-in"><a href="#trimmingCharacters-in" class="headerlink" title="trimmingCharacters(in:)"></a>trimmingCharacters(in:)</h3><p>we can ask Swift to trim all whitespace at the start and end of a string like this:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> trimmed <span class="operator">=</span> someString.trimmingCharacters(in: .whitespacesAndNewlines)</span><br></pre></td></tr></table></figure>
-
-<h3 id="读取txt文件中的内容-并转化成String"><a href="#读取txt文件中的内容-并转化成String" class="headerlink" title="读取txt文件中的内容,并转化成String"></a>读取txt文件中的内容,并转化成String</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例如读取项目中的start.txt文本文件中的内容,</span></span><br><span class="line"><span class="comment">// 此外,该文本每行一个单词,随机读取一个单词:</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> contentOfTxt <span class="operator">=</span> <span class="type">Bundle</span>.main.url(forResource: <span class="string">&quot;start&quot;</span>, withExtension: <span class="string">&quot;txt&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> contentOfString <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">String</span>(contentsOf: contentOfTxt) &#123;</span><br><span class="line">        <span class="keyword">let</span> allWords <span class="operator">=</span> contentOfString.components(separatedBy: <span class="string">&quot;<span class="subst">\n</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">var</span> randomWord <span class="operator">=</span> allWords.randomElement() <span class="operator">??</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="comment">// 如果在func中,需要空return,并在下面if之外fatalError()</span></span><br><span class="line">        <span class="comment">// return</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// fatalError()</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="NSRange-amp-amp-rangeOfMisspelledWord-amp-amp-NSNotFound"><a href="#NSRange-amp-amp-rangeOfMisspelledWord-amp-amp-NSNotFound" class="headerlink" title="NSRange &amp;&amp; rangeOfMisspelledWord &amp;&amp; NSNotFound"></a>NSRange &amp;&amp; rangeOfMisspelledWord &amp;&amp; NSNotFound</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rangeOfMisspelledWord:</span></span><br><span class="line"><span class="comment">// Initiates a search of a range of a string for a misspelled word.</span></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">rangeOfMisspelledWord</span>(<span class="params">in</span> <span class="params">stringToCheck</span>: <span class="type">String</span>, </span><br><span class="line">                     <span class="params">range</span>: <span class="type">NSRange</span>, </span><br><span class="line">                <span class="params">startingAt</span> <span class="params">startingOffset</span>: <span class="type">Int</span>, </span><br><span class="line">                      <span class="params">wrap</span> <span class="params">wrapFlag</span>: <span class="type">Bool</span>, </span><br><span class="line">                  <span class="params">language</span>: <span class="type">String</span>) -&gt; <span class="type">NSRange</span></span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/SwiftUI/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://giantslayer1980.github.io/SwiftUI/" data-id="clemy7qa10005d60db8mngock" data-title="SwiftUI" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
