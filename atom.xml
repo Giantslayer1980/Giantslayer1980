@@ -6,7 +6,7 @@
   <link href="http://giantslayer1980.github.io/atom.xml" rel="self"/>
   
   <link href="http://giantslayer1980.github.io/"/>
-  <updated>2023-06-17T07:22:50.180Z</updated>
+  <updated>2023-07-15T10:18:06.499Z</updated>
   <id>http://giantslayer1980.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2023-7-15</title>
+    <link href="http://giantslayer1980.github.io/2023-7-15/"/>
+    <id>http://giantslayer1980.github.io/2023-7-15/</id>
+    <published>2023-07-14T16:00:00.000Z</published>
+    <updated>2023-07-15T10:18:06.499Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/Images/2023-7-15.jpg" alt="2023-7-15"></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/Images/2023-7-15.jpg&quot; alt=&quot;2023-7-15&quot;&gt;&lt;/p&gt;
+</summary>
+    
+    
+    
+    <category term="Paintings" scheme="http://giantslayer1980.github.io/categories/Paintings/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>2023-6-17 -- mum and cat</title>
